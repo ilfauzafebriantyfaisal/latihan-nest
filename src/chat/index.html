@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <img src="https://via.placeholder.com/40" alt="Foto Teman" class="profile-pic">
+            <div class="header-info">
+                <h2>Leha</h2>
+                <p>Online</p>
+            </div>
+        </header>
+        <div class="chat-box" id="chatBox">
+            <!-- Pesan Awal dari Teman -->
+            <div class="message received">
+                <p>Halo Ilfauza! Ada kabar apa hari ini?</p>
+                <span class="time">10:00</span>
+            </div>
+        </div>
+        <form class="chat-input" onsubmit="sendMessage(event)">
+            <input type="text" id="messageInput" placeholder="Ketik pesan..." required>
+            <button type="submit">Kirim</button>
+        </form>
+    </div>
+
+    <script>
+        const friendResponses = [
+            "Baik-baik saja, terima kasih!",
+            "Aku sedang sibuk belakangan ini, hehe.",
+            "Hmm, apa rencanamu hari ini?",
+            "Semangat yaa",
+            "Oh ya, ada cerita menarik dari kamu?"
+        ];
+
+        let responseIndex = 0; // Indeks awal untuk balasan teman
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message) return;
+
+            // Tambahkan pesan pengguna
+            addMessage(message, 'sent');
+            input.value = '';
+
+            // Respon otomatis dari "Teman"
+            setTimeout(() => {
+                const response = getNextResponse();
+                addMessage(response, 'received');
+            }, 1000);
+        }
+
+        function addMessage(text, type) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+            messageDiv.innerHTML = `<p>${text}</p><span class="time">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>`;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function getNextResponse() {
+            const response = friendResponses[responseIndex];
+            responseIndex = (responseIndex + 1) % friendResponses.length; // Loop ke balasan berikutnya
+            return response;
+        }
+    </script>
+
+</body>
+
+</html>
