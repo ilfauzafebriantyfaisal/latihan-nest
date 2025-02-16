@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Jenis_Kelamin } from "@prisma/client";
+import { jenis_kelamin } from "@prisma/client";
 import { IsEnum, IsNotEmpty, IsString, Length } from "class-validator";
 
 export class CreateMahasiswaDTO {
@@ -29,13 +29,13 @@ export class CreateMahasiswaDTO {
     jurusan : string;
 
     @ApiProperty ({
-        enum : Jenis_Kelamin,
+        enum : jenis_kelamin,
         description : "Jenis Kelamin",
         example : "P"
     })
-    @IsEnum(Jenis_Kelamin, {
+    @IsEnum(jenis_kelamin, {
         message : 
         "Jenis Kelamin Hanya bernilai L dan P"
     })
-    jenis_kelamin : Jenis_Kelamin;
+    jenis_kelamin : jenis_kelamin;
 }
